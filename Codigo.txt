@@ -1,0 +1,49 @@
+package com.example.aplicacionbancaria
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import java.util.Calendar
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val textViewSaludo = findViewById<TextView>(R.id.saludo_text)
+
+        // Obtener la hora actual
+        val cal = Calendar.getInstance()
+        val hora = cal.get(Calendar.HOUR_OF_DAY)
+
+        // Determinar si es de día, tarde o noche
+        textViewSaludo.text = when (hora) {
+            in 0..11 -> "Buenos días"
+            in 12..17 -> "Buenas tardes"
+            else -> "Buenas noches"
+        }
+
+        val buttonEntrar = findViewById<Button>(R.id.entrar)
+
+        // Configurar el OnClickListener para el botón "entrar"
+        buttonEntrar.setOnClickListener {
+
+            // Crear una alerta de diálogo
+            val alertDialogBuilder = AlertDialog.Builder(this)
+            alertDialogBuilder.apply {
+                setTitle("Acceso Correcto")
+                setMessage("¡Has accedido correctamente!")
+                setPositiveButton("Aceptar") { dialog, _ ->
+                    dialog.dismiss() // Cerrar el diálogo cuando se hace clic en Aceptar
+                }
+            }
+
+            // Mostrar la alerta de diálogo
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
+        }
+    }
+}
